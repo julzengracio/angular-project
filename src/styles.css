@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #F1F1F1;
+    background-image: url('/assets/bgImage.jpg');
+    padding: 4em 0;
+    font-family: 'Verdana';
+}
+
+.article-container {
+    background: #fff;
+    /* border-left: 10px solid #093f68; */
+    padding: 2em 0;
+}
+
+.article-container a {
+    text-transform: uppercase;
+    font-size: 2.5em;
+    font-weight: bold;
+    line-height: 1em;
+    color: #2c3e50;
+}
+
+.article-container a:hover{
+    text-decoration: none;
+}
+
+.article-container p {
+    color: #737373;
+}
+
+.image-holder {
+    padding-left: 30px;
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+}

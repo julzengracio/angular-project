@@ -1,0 +1,17 @@
+<div *ngIf="article">
+  <div class="container article-container">
+    <div class="row container">
+      <div class="col-sm-12 col-md-10">
+        <a routerLink="#">{{ article.title }}</a>
+        <p>{{ article.content }}</p>
+      </div>
+      <div class="col-sm-12 col-md-2">
+        <ul>
+          <li class="custom-list"><a routerLink="/edit/{{ article._id }}"><span class="glyphicon glyphicon-edit glyph"> Edit</span></a></li>
+          <li class="custom-list"><a (click)="deleteArticle(article._id)"><span class="glyphicon glyphicon-remove glyph"> Delete</span></a></li>
+          <li class="custom-list"><a routerLink="/"><span class="glyphicon glyphicon-arrow-left glyph"> Back</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

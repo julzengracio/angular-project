@@ -1,0 +1,21 @@
+<div class="container article-container">
+  <form [formGroup]="articleFrm" (ngSubmit)="addArticle(article,articleFrm.value)" *ngIf="articleFrm" class="container">
+    <div class="form-group">
+        <label>Article Title</label>
+        <p class="live-input">{{ article.title | uppercase }}</p>
+        <input [(ngModel)]="article.title" type="text" class="form-control" name="title" [formControl]="articleFrm.controls['title']" formControlName="title">
+        <div class="alert" *ngIf="!articleFrm.controls['title'].valid && articleFrm.controls['title'].touched">
+          You must specify a title that's at least 10 characters long.
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+        <textarea wrap="hard" rows="30" name="content" class="form-control" id="content" required [formControl]="articleFrm.controls['content']" formControlName="content"></textarea>
+        <div class="alert" *ngIf="!articleFrm.controls['content'].valid && articleFrm.controls['content'].touched">
+            You must specify a content that's at least 10 characters long.
+        </div>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Post Article" [disabled]="!articleFrm.valid">
+    <button type="button" class="btn btn-danger custom-btn"><a routerLink="/">Cancel</a></button>
+  </form>
+</div>

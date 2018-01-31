@@ -1,0 +1,15 @@
+.add-btn {
+    background-color: #d2d2d2;
+    padding: 7px 12px;
+    margin: 20px 0 20px 20px;
+    display: inline-block;
+}
+
+.navig-brand {
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.navig-links li>a:hover {
+    text-decoration: none;
+}
