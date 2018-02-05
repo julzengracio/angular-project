@@ -1,5 +1,6 @@
 ## NBAInsider - AngularJS 2 4th Year Project
 
+*Project still in progress.
 This project is an Article-based web application that can perform the basic CRUD operation. It is built with the technologies included in the MEAN development stack.
 
 ## Install, build and run the project
