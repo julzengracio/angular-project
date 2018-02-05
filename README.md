@@ -1,4 +1,6 @@
-# Nba Insider
+## NBAInsider - AngularJS 2 4th Year Project
+
+This project is an Article-based web application that can perform the basic CRUD operation. It is built with the technologies included in the MEAN development stack.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.5.0.
 
