@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-//const MongoClient = require('mongodb').MongoClient;
 const article = require('../models/article');
 
+// MongoDb url
 const url = "mongodb://@localhost:27017";
 
 let db;
@@ -21,6 +21,7 @@ mongoose.connect(url, function(err, database) {
     //server.listen(8888);
 });
 
+// Get all the articles
 router.get('/all', function(req, res) {
     article.find({})
         .exec(function(err, articles) {
@@ -34,6 +35,7 @@ router.get('/all', function(req, res) {
         });
 });
 
+// Get a single article
 router.get('/articles/:id', function(req, res) {
     console.log('Requesting a specific article');
     article.findById(req.params.id)
@@ -47,6 +49,7 @@ router.get('/articles/:id', function(req, res) {
         });
 });
 
+// Create
 router.post('/create', function(req, res) {
     console.log('Posting an Article');
     var newArticle = new article();
@@ -62,6 +65,7 @@ router.post('/create', function(req, res) {
     });
 });
 
+// Update
 router.post('/update/:id', function(req, res) {
     console.log('Updating an Article');
 
@@ -78,6 +82,7 @@ router.post('/update/:id', function(req, res) {
         });
 });
 
+// Delete
 router.get('/delete/:id', function(req, res) {
     console.log('Deleting an article');
     article.findByIdAndRemove(req.params.id)

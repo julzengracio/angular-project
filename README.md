@@ -3,6 +3,7 @@
 This project is an Article-based web application that can perform the basic CRUD operation. It is built with the technologies included in the MEAN development stack.
 
 ## Install, build and run the project
+ - MongoDb is required to run this project.
  - Run `npm install` to install the dependencies. 
  - Run `ng build` to build the project.
  - Run `node server.js` to run the project.
