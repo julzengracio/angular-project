@@ -27,6 +27,14 @@ export class ArticleService {
       .map(result => this.result = result.json());
   }
 
+  insertTestArticle(post: Article) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+
+    return this._http.post('/api/test', JSON.stringify(post), options)
+      .map(result => this.result = result.json());
+  }
+
   updateArticle(post: Article, id) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });

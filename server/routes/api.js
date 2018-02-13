@@ -52,6 +52,7 @@ router.get('/articles/:id', function(req, res) {
 // Create
 router.post('/create', function(req, res) {
     console.log('Posting an Article');
+    console.time('Write Article')
     var newArticle = new article();
     newArticle.title = req.body.title;
     newArticle.content = req.body.content;
@@ -63,6 +64,7 @@ router.post('/create', function(req, res) {
             res.json(article);
         }
     });
+    console.timeEnd('Write Article')
 });
 
 // Update
@@ -94,6 +96,26 @@ router.get('/delete/:id', function(req, res) {
                 res.json(article);
             }
         });
+});
+
+// Create multiple articles
+router.post('/test', function(req, res) {
+    console.time('Stress Test')
+    for (let i = 0 ; i < 5; i++) {
+        var newArticle = new article();
+        newArticle.title = req.body.title;
+        newArticle.content = req.body.content;
+        newArticle.save(function(err, article) {
+            if(err) {
+                console.log('Error inserting the article');
+                console.log(err);
+            } else {
+                console.log('success');
+            }
+        });
+    }
+    console.timeEnd('Stress Test')
+    res.sendStatus(201);
 });
 
 module.exports = router;

@@ -1,0 +1,6 @@
+<div class="container article-container">
+  <form [formGroup]="articleFrm" (ngSubmit)="addArticle(article,articleFrm.value)" *ngIf="articleFrm" class="container">
+    <input type="submit" class="btn btn-primary" value="Post Article">
+    <button type="button" class="btn btn-danger custom-btn"><a routerLink="/">Cancel</a></button>
+  </form>
+</div>
