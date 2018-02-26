@@ -2,6 +2,9 @@
   <div class="container article-container">
     <div class="row container">
       <div class="col-sm-12 col-md-10">
+        <div>
+          <img class="articleImg" src = "http://localhost:8888/api/file/{{article.filename}}" />
+        </div>  
         <a routerLink="#">{{ article.title }}</a>
         <p>{{ article.content }}</p>
       </div>

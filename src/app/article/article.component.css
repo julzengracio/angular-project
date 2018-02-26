@@ -19,3 +19,7 @@ p {
     list-style-type: none;
     cursor: pointer;
 }
+
+.articleImg {
+    width: 100%;
+}

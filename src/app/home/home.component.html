@@ -2,7 +2,7 @@
   <div class="container article-container">
     <div class="row">
       <div class="col-sm-12 col-md-5 col0-md-offset-1 columns">
-        <img src="../../assets/nba-logo.jpg" class="img-responsive image-holder">
+        <img src="http://localhost:8888/api/file/{{article.filename}}" class="img-responsive image-holder">
       </div>
       <div class="col-sm-12 col-md-6 columns">
         <a routerLink="/articles/{{ article._id }}">{{ article.title }}</a>

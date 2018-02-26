@@ -2,24 +2,52 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const article = require('../models/article');
+const multer = require('multer');
+const GridFsStorage = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
 
 // MongoDb url
-const url = "mongodb://@localhost:27017";
+const dburl = "mongodb://@localhost:27017/articles";
 
-let db;
+let dbase;
 
 // Connect to server
 mongoose.Promise = global.Promise;
-mongoose.connect(url, function(err, database) {
+mongoose.connect(dburl, function(err, database) {
     if(err){
         console.log('Error connecting')
         console.log(err);
         return;
     }
-    db = database;
+    dbase = database;
     console.log("Connected successfully to server");
     //server.listen(8888);
 });
+
+const conn = mongoose.connection;
+Grid.mongo = mongoose.mongo;
+const gfs = Grid(conn.db);
+// console.log(gfs);
+
+// storage set up using multer-gridfs-storage
+const storage = new GridFsStorage({
+    url : dburl,
+    file: (req, file) => {
+        if (file.mimetype === 'image/jpeg') {
+          return {
+            filename: file.originalname,
+            bucketName: 'images'
+          };
+        } else {
+          return null;
+        }
+      }
+});
+
+// multer settings for single upload
+let upload = multer({
+    storage: storage
+}).single('file');
 
 // Get all the articles
 router.get('/all', function(req, res) {
@@ -37,7 +65,7 @@ router.get('/all', function(req, res) {
 
 // Get a single article
 router.get('/articles/:id', function(req, res) {
-    console.log('Requesting a specific article');
+    console.time('Requesting a specific article');
     article.findById(req.params.id)
         .exec(function(err, article){
             if(err){
@@ -47,12 +75,12 @@ router.get('/articles/:id', function(req, res) {
                 res.json(article);
             }
         });
+    console.timeEnd('Requesting a specific article');
 });
 
 // Create
 router.post('/create', function(req, res) {
-    console.log('Posting an Article');
-    console.time('Write Article')
+    console.time('Article Created')
     var newArticle = new article();
     newArticle.title = req.body.title;
     newArticle.content = req.body.content;
@@ -64,7 +92,43 @@ router.post('/create', function(req, res) {
             res.json(article);
         }
     });
-    console.timeEnd('Write Article')
+    console.timeEnd('Article Created')
+});
+
+router.get('/file', function(req, res){
+    gfs.collection('images'); //set collection name to lookup into
+  
+    gfs.files.find().toArray(function(err, files){
+      if(!files || files.length === 0){
+        return res.status(404).json({
+          responseCode: 1,
+          responseMessage: "error"
+        });
+      }
+      res.send(JSON.stringify(files));
+    });
+});
+
+router.get('/file/:filename', function(req, res){
+    gfs.collection('images'); //collection name for finding the files
+
+    // check if file exist
+    gfs.files.find({filename: req.params.filename}).toArray(function(err, files){
+        if(!files || files.length === 0){
+            return res.status(404).json({
+                responseCode: 1,
+                responseMessage: "error"
+            });
+        }
+        // Create read stream
+        let readstream = gfs.createReadStream({
+            filename: files[0].filename,
+            root: "images"
+        });
+        // set content type
+        res.set('Content-Type', files[0].contentType)
+        return readstream.pipe(res);
+    });
 });
 
 // Update
@@ -86,7 +150,7 @@ router.post('/update/:id', function(req, res) {
 
 // Delete
 router.get('/delete/:id', function(req, res) {
-    console.log('Deleting an article');
+    console.time('Article Deleted');
     article.findByIdAndRemove(req.params.id)
         .exec(function(err, article){
             if(err){
@@ -96,6 +160,7 @@ router.get('/delete/:id', function(req, res) {
                 res.json(article);
             }
         });
+    console.timeEnd('Article Deleted')
 });
 
 // Create multiple articles
@@ -110,7 +175,7 @@ router.post('/test', function(req, res) {
                 console.log('Error inserting the article');
                 console.log(err);
             } else {
-                console.log('success');
+                //console.log('success');
             }
         });
     }

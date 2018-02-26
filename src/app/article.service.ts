@@ -10,12 +10,17 @@ export class ArticleService {
 
   constructor(private _http: Http) { }
   getArticles() {
-    return this._http.get("/api/all")
+    return this._http.get('/api/all')
       .map(result => this.result = result.json());
   }
 
   getArticle(id) {
-    return this._http.get("/api/articles/"+id)
+    return this._http.get('/api/articles/' + id)
+      .map(result => this.result = result.json());
+  }
+
+  getImages() {
+    return this._http.get('/api/file')
       .map(result => this.result = result.json());
   }
 

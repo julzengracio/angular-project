@@ -19,7 +19,9 @@ export class ArticleComponent implements OnInit {
       let id = params['id'];
 
       this._articleService.getArticle(id)
-        .subscribe(res => this.article = res);
+        .subscribe(res => {
+          this.article = res;
+        });
     });
   }
 
@@ -27,7 +29,7 @@ export class ArticleComponent implements OnInit {
     this._articleService.deleteArticle(articleId)
       .subscribe(res => {
         this.router.navigateByUrl('/');
-      })
+      });
   }
 
 }

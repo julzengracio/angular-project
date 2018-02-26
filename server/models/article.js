@@ -1,10 +1,10 @@
-//const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const articleSchema = new Schema({
     title: String,
-    content: String
+    content: String,
+    filename: String
 });
 
 module.exports = mongoose.model('article', articleSchema);
