@@ -14,15 +14,21 @@ export class CreateComponent implements OnInit {
   article: Article;
   articleFrm: FormGroup;
   articles: Array<Article>;
+  images = [];
 
-  constructor(private _articleService: ArticleService, 
-              private router: Router, 
-              private aR: ActivatedRoute, 
+  constructor(private _articleService: ArticleService,
+              private router: Router,
+              private aR: ActivatedRoute,
               private fb: FormBuilder) { }
 
   ngOnInit() {
     this._articleService.getArticles()
       .subscribe(res => this.articles = res);
+
+    this._articleService.getImages()
+      .subscribe(res => {
+        this.images = res;
+      });
 
     this.aR.params.subscribe((params) => {
       if (params['id']) {
@@ -33,12 +39,14 @@ export class CreateComponent implements OnInit {
             this.articleFrm = this.fb.group({
               'title' : [this.article['title'], Validators.compose([Validators.required, Validators.minLength(10)])],
               'content' : [this.article['content'], Validators.compose([Validators.required, Validators.minLength(10)])],
+              'filename' : [this.article['filename'], Validators.compose([Validators.required])],
             });
         });
       } else {
         this.articleFrm = this.fb.group({
           'title' : [null, Validators.compose([Validators.required, Validators.minLength(10)])],
           'content' : [null, Validators.compose([Validators.required, Validators.minLength(10)])],
+          'filename' : [null, Validators.compose([Validators.required])]
         });
       }
     })
@@ -46,6 +54,7 @@ export class CreateComponent implements OnInit {
     this.articleFrm = this.fb.group({
       'title' : [null, Validators.compose([Validators.required, Validators.minLength(10)])],
       'content' : [null, Validators.compose([Validators.required, Validators.minLength(10)])],
+      'filename' : [null, Validators.compose([Validators.required])]
     });
   }
 

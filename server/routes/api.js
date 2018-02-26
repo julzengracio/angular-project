@@ -84,6 +84,7 @@ router.post('/create', function(req, res) {
     var newArticle = new article();
     newArticle.title = req.body.title;
     newArticle.content = req.body.content;
+    newArticle.filename = req.body.filename;
     newArticle.save(function(err, article) {
         if(err) {
             console.log('Error inserting the article');
