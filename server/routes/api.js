@@ -134,7 +134,7 @@ router.get('/file/:filename', function(req, res){
 
 // Update
 router.post('/update/:id', function(req, res) {
-    console.log('Updating an Article');
+    console.time('Article Updated');
 
     article.findById(req.params.id)
         .exec(function(err, article) {
@@ -147,6 +147,7 @@ router.post('/update/:id', function(req, res) {
                 res.json(article);
             }
         });
+    console.timeEnd('Article Updated');
 });
 
 // Delete
@@ -166,8 +167,8 @@ router.get('/delete/:id', function(req, res) {
 
 // Create multiple articles
 router.post('/test', function(req, res) {
-    console.time('Stress Test')
-    for (let i = 0 ; i < 5; i++) {
+    console.time('Stress Test complete')
+    for (let i = 0 ; i < req.body.number; i++) {
         var newArticle = new article();
         newArticle.title = req.body.title;
         newArticle.content = req.body.content;
@@ -180,7 +181,7 @@ router.post('/test', function(req, res) {
             }
         });
     }
-    console.timeEnd('Stress Test')
+    console.timeEnd('Stress Test complete')
     res.sendStatus(201);
 });
 

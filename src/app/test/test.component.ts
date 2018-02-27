@@ -15,9 +15,9 @@ export class TestComponent implements OnInit {
   articleFrm: FormGroup;
   articles: Array<Article>;
 
-  constructor(private _articleService: ArticleService, 
-              private router: Router, 
-              private aR: ActivatedRoute, 
+  constructor(private _articleService: ArticleService,
+              private router: Router,
+              private aR: ActivatedRoute,
               private fb: FormBuilder) { }
 
   ngOnInit() {
@@ -33,12 +33,14 @@ export class TestComponent implements OnInit {
             this.articleFrm = this.fb.group({
               'title' : ['Test title'],
               'content' : ['Test content'],
+              'number' : 1
             });
         });
       } else {
         this.articleFrm = this.fb.group({
           'title' : ['Test title'],
           'content' : ['Test content'],
+          'number' : null
         });
       }
     })
@@ -46,6 +48,7 @@ export class TestComponent implements OnInit {
     this.articleFrm = this.fb.group({
       'title' : ['Test title'],
       'content' : ['Test content'],
+      'number' : 1
     });
   }
 
